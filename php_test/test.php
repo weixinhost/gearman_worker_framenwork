@@ -8,7 +8,13 @@ $data = msgpack_pack(array(
     'b' => 'str'
 ));
 
+{
+    $result = $client->do('echo',$data);
+    echo $result;
+}
 
-$result = $client->do('test',$data);
+{
 
-echo $result;
+    $result = $client->do('get_config'," ");
+    echo $result;
+}

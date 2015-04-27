@@ -22,4 +22,13 @@
     | - src       （源码）    
     | - php_test   (php 测试脚本)
     | - CmakeLists.txt 
-    
+
+
+#### Developer Guide
+
+    1. 配置文件使用ini格式
+
+    2. src/main.c 中提供了两个示例worker.一个名为echo,一个名为get_config.
+
+    3. 对于worker的job data需要打包解包请自行添加库实现。 job data是二进制安全的.
+        

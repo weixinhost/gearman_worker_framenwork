@@ -18,7 +18,9 @@ void printf_command_help(){
     );
 }
 
-void* test_function(gearman_job_st *job, void *result, size_t *result_len, gearman_return_t *ret_ptr);
+void* echo_function(gearman_job_st *job, void *result, size_t *result_len, gearman_return_t *ret_ptr);
+void* get_config_function(gearman_job_st *job, void *result, size_t *result_len, gearman_return_t *ret_ptr);
+
 
 int main(int argc, char **argv){
 
@@ -52,7 +54,9 @@ int main(int argc, char **argv){
        return 0;
    }
 
-    mgearmand_add_function ("test",test_function);
+    mgearmand_add_function ("echo", echo_function);
+
+    mgearmand_add_function("get_config",get_config_function);
 
     mgearmand_worker_init ();
 
@@ -61,7 +65,8 @@ int main(int argc, char **argv){
     return 1;
 }
 
-void* test_function(gearman_job_st *job, void *result, size_t *result_len, gearman_return_t *ret_ptr){
+
+void* echo_function(gearman_job_st *job, void *result, size_t *result_len, gearman_return_t *ret_ptr){
 
     /**
      * get the job data
@@ -82,11 +87,28 @@ void* test_function(gearman_job_st *job, void *result, size_t *result_len, gearm
     return result;
 }
 
+void* get_config_function(gearman_job_st *job, void *result, size_t *result_len, gearman_return_t *ret_ptr){
+
+    /**
+     * get the job data
+     */
 
 
+    char *gearman_server = mgearmand_config_get_string ("gearman_host");
+
+    long gearman_port = mgearmand_config_get_long ("gearman_port");
+
+    result = (char *)malloc(1024);
+
+    sprintf(result,"Server:%s Port:%ld",gearman_server,gearman_port);
+
+    *result_len = strlen(result);
+
+    *ret_ptr = GEARMAN_SUCCESS;
 
 
-
+    return result;
+}
 
 
 

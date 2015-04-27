@@ -4,6 +4,7 @@
 #include <time.h>
 #include <string.h>
 #include <signal.h>
+
 #include "../lib/iniparser/iniparser.h"
 
 #define MGEARMAND_MAX_WORKER_NUM 128
@@ -203,6 +204,3 @@ int mgearmand_worker_run(){
     }
 
 }
-
-
-
